@@ -1,5 +1,6 @@
 import discord
 import datetime
+import os
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='>', description="BOT da ADS Fasipe")
@@ -18,4 +19,4 @@ async def info(ctx):
 async def on_ready():
     await bot.change_presence(activity=discord.Streaming(name="Como Centralizar uma DIV", url="www.youtube.com/fabioakita"))
     print('Estou Pronto!')
-bot.run('NzY1Nzc2NTE5Njc0OTg2NTQ2.X4Zu9Q.avAlQXcjPR8_jURuNEjVgksRofU')
+bot.run(os.getenv('TOKEN'))
