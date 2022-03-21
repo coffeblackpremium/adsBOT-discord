@@ -82,22 +82,18 @@ async def play(ctx, url:str):
     try:
         server = ctx.message.guild
         voice_channel = server.voice_client
-    
-   # if voice == None:
-   #     await voiceChannel.connect()
-   # else:
-   #     await voice.move_to(channel)
-
+        voice_client = ctx.message.guild.voice_client
+        channel = ctx.message.author.voice.channel
 
         async with ctx.typing():
             filename = await YTDLSource.from_url(url, loop=bot.loop)
             voice_channel.play(discord.FFmpegPCMAudio(executable="ffmpeg", source=filename))
         await ctx.send(f'**Você está ouvindo: {filename} **')
-        if not voice_channel.is_playing():
+        if voice_client.is_playing():
             os.remove(filename)
-            await voice_channel.disconnect()
+            await channel.disconnect()
     except:
-        await ctx.send("The bot is not connected to a voice channel.")
+        await ctx.send(f"{ctx.message.author.name}, o Bot não está conectado em nenhum canal de Voz.")
     
 @bot.command()
 async def leave(ctx):
@@ -109,6 +105,29 @@ async def leave(ctx):
             await ctx.send(f'{ctx.author.mention} O BOT não está conectado em nenhuma sala!')
     else:
         await ctx.send(f'{ctx.author.mention} O BOT não está conectado em nenhuma sala!')
+@bot.command()
+async def pause(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.pause()
+    else:
+        await ctx.send("O Bot não está tocando nenhuma música no momento")
+
+@bot.command()
+async def resume(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_paused():
+        await voice_client.resume()
+    else:
+        await ctx.send("O Bot não está tocando nenhuma música agora. Utilize o comando: play + (url) para iniciar uma musica")
+
+@bot.command()
+async def stop(ctx):
+    voice_client = ctx.message.guild.voice_client
+    if voice_client.is_playing():
+        await voice_client.stop()
+    else:
+        await ctx.send(f"{ctx.author.mention}, O BOT não está tocando nenhuma musica no momento")
 
 @bot.event
 async def on_ready():
