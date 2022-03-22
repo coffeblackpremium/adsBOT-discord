@@ -1,1 +1,4 @@
 *.env
+*./cogs
+*guarda.py
+*__pycache__
