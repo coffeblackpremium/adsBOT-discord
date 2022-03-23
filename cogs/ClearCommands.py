@@ -8,7 +8,11 @@ class ClearCommands(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(f'Clear Esta Funcionando!')
-
+    
+    @commands.command()
+    async def clear_adm(self, ctx, limit:int):
+        await ctx.channel.purge(limit=limit+1)
+    
     @commands.command()
     async def clear(self, ctx, limit:int):
         await ctx.channel.purge(limit=limit+1)

@@ -10,6 +10,11 @@ token = os.getenv("TOKEN")
 
 bot = commands.Bot(command_prefix='>', description="BOT da ADS Fasipe")
 
+@bot.event
+async def on_ready():
+    await bot.change_presence(activity=discord.Game(name="Centralizando uma Div"))
+
+
 if __name__ == '__main__':
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
