@@ -10,9 +10,10 @@ token = os.getenv("TOKEN")
 
 bot = commands.Bot(command_prefix='>', description="BOT da ADS Fasipe")
 
+
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="Centralizando uma Div"))
+    await bot.change_presence(activity=discord.Game(name="Pokemon XL"))
 
 
 if __name__ == '__main__':
